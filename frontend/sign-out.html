@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubWise</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+    <section class="auth-section">
+        <div>
+            <div class="header">
+                <h1>SubWise</h1>
+                <p>Manage your subscriptions with ease</p>
+            </div>
+
+            <div class="sign-out-div auth-div">
+                <h2>Confirm Logout</h2>
+                <p>Are you sure you want to log out of your account?</p>
+                <img src="images/logout-purple.svg" alt="logout">
+                <div>
+                    <a href="./dashboard.html" class="cancel-sign-out">Cancel</a>
+                    <button class="logout-btn js-logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast-container"></div>
+    </section>
+
+    <script type="module" src="scripts/sign-out.js"></script>
+</body>
+</html>

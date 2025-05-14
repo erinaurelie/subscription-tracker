@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: 261 35% 54%;
+    --secondary: 215.4 16.3% 46.9%;
+    --muted: 215.4 16.3% 85%;
+    --box-shadow: 0 4px 30px rgba(0, 0, 0, 0.116);
+    --border-radius: 0.7rem
+}
+
+
+/* toast notification */
+#toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toast {
+    padding: 0.75rem 1.25rem;
+    background-color: #323232;
+    color: white;
+    border-radius: 0.5rem;
+    opacity: 0;
+    animation: slideIn 0.3s ease-out forwards, fadeOut 0.5s ease-in 2.5s forwards;
+}
+
+.toast.success {
+    background-color: #16a34a; /* Green */
+}
+
+.toast.error {
+    background-color: #dc2626; /* Red */
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(100%); }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubWise</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+    <section class="auth-section">
+        <div>
+            <div class="header">
+                <h1>SubWise</h1>
+                <p>Manage your subscriptions with ease</p>
+            </div>
+
+            <div class="auth-div">
+                <h2>Sign Up</h2>
+                <p>Create an account to get started</p>
+
+                <form>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" autocomplete="name" placeholder="Jane Doe" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="name@example.com" autocomplete="email" required>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="********" autocomplete="current-password" required>
+
+                    <button class="js-sign-up-btn btn">
+                        Sign Up
+                        <div class="dot-loader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </form>
+
+                <p>Already have an account? <a href="./index.html">Sign in</a></p>
+            </div>
+        </div>
+        <div id="toast-container"></div>
+    </section>
+    <script type="module" src="scripts/sign-up.js"></script>
+</body>
+</html>

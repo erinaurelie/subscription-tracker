@@ -1,0 +1,32 @@
+/* dark mode */
+html {
+    background-color: rgb(23, 30, 49);
+    color: whitesmoke;
+}
+
+/* fake color change using css filters*/
+img:not(.icons img) {
+    /* brightness(0) makes the entire img black then invert(1) inverts black to white */
+    filter: brightness(0) invert(1);
+}
+
+
+.right-side div:hover,
+.logout:hover,
+.edit-subs:hover {
+    border-color: hsl(var(--primary));
+    background-color: hsl(var(--primary)) !important;
+    
+}
+
+.logout {
+    color: white !important;
+}
+
+.edit-subs {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+}
+
+.section:nth-of-type(1) {
+    background-color: rgb(30, 41, 59);
+}

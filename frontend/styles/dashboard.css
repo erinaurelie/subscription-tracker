@@ -1,0 +1,235 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid hsl(var(--secondary));
+    padding: 1rem ;
+}
+
+
+.left-side,
+.right-side {
+    display: flex;
+    align-items: center;
+}
+
+.left-side h1 {
+    color: hsl(var(--primary));
+}
+
+.left-side sub {
+    font-size: 1rem;
+    color: hsl(var(--secondary));
+    margin-left: 5px;
+}
+
+.right-side {
+    align-items: center;
+    gap: 30px;
+}
+
+.right-side div {
+   border: 1px solid hsl(var(--muted));
+   border-radius: 50%;
+   padding: .5rem;
+   cursor: pointer;
+}
+
+.right-side div:hover {
+    background-color: hsl(var(--muted));
+}
+
+.btn {
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: .5rem .8rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.add-subscription-btn {
+    background-color: hsl(var(--primary));
+    color: white
+}
+
+.add-subscription-btn:hover {
+    background-color: blueviolet;
+}
+
+.logout {
+    background-color: transparent;
+    border: 1px solid hsl(var(--muted));
+}
+
+.logout:visited,
+.logout:link {
+    text-decoration: none;
+    color: black;
+}
+
+.logout:hover {
+    background-color: hsl(var(--muted));
+}
+
+
+main,
+section {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+section:nth-of-type(1) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    box-shadow: var(--box-shadow);
+    min-height: 500px;   
+}
+
+
+
+.overview {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 25px;
+}
+
+.category {
+    color: hsl(var(--secondary));
+}
+
+.price {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    font-size: 2rem;
+    color: rgb(79 209 197);
+    font-weight: bold;
+}
+
+
+.subscriptions-empty {
+    background-color: hsl(210 40% 96.1%);
+    margin-top: 20px;
+    text-align: center;
+    padding: 3rem;
+}
+
+.subscriptions-empty h3 {
+    color: hsl(var(--secondary));
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.subscriptions-empty p {
+    color: hsl(var(--secondary));
+}
+
+.sub-title {
+    margin: 20px 0;
+}
+
+.subscriptions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 0;
+}
+
+
+.subscription-item {
+    padding: 3rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.subscription-item > div:nth-of-type(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.subscription-item > div:nth-of-type(2) {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 15px;
+}
+
+.icons * {
+    padding: .4rem .6rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icons img:nth-of-type(1) {
+    border: 1px solid hsl(var(--secondary));
+}
+
+.icons img:nth-of-type(2) {
+    border: 1px solid #D91A1A;
+}
+
+.icons img:nth-of-type(1):hover {
+    background-color: hsl(var(--muted));
+}
+
+.icons img:nth-of-type(2):hover {
+    background-color: hsla(0, 79%, 48%, 0.1);
+}
+
+
+.subscript {
+    font-size: 12px;
+    color: hsl(var(--secondary));
+}
+
+.subscription-item > p {
+    color: hsl(var(--secondary));
+}
+
+#start-date {
+    font-family: inherit;
+}
+
+@media (max-width: 768px) {
+    .subscriptions {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.breakdown {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.breakdown div span:first-child {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.breakdown div span:nth-of-type(2) {
+    text-transform: capitalize;
+}
+
+.breakdown div {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.breakdown > span {
+    font-weight: bold;
+}
+
+.breakdown > span::before { /*no reason for doing this just wanted to try*/
+    content: '$';
+}

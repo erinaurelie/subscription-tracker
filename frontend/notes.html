@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+    <div>
+        <h1>The loading aimation</h1>
+        The loading animation was done using a diuv called <code>dot-loader</code> then 3 different spans for the three different dots. By default this div was set to <code>viisibilty: hidden;</code> then when clicked it becomes visible. 
+    </div>
+    <div>
+        <h2>Type ColocalStorage.getItem('token')ercion</h2>
+        <code>!!</code>
+        The expression is used to check whether a value exists in the browser's local storage for the key token.  <br>
+
+        <code>localStorage.getItem('token')</code>: Retrieves the stored value associated with the key 'token'. If no value exists, it returns null. <br>
+
+        <tt>!!</tt>: The double exclamation marks convert the retrieved value into a Boolean: If a value exists (i.e., not null or undefined), it becomes true. If there is no value (i.e., null or undefined), it becomes false.
+    </div>
+    <div>
+        <h2>Auth Workflow</h2>
+        <ul>
+            <li>User signs in <tt>sign-in.html</tt> -> <tt>auth.js</tt> sends credentials to backend</li>
+            <li>Token received is stored in <code>localStorage</code></li>
+            <li>On protected pages like <tt>dashboard.html</tt>, <tt>dashboard.js</tt> checks for token and uses it in API requests.</li>
+            <li>Sign-out clears the token and redirects to the <tt>sign-in/html</tt></li>
+        </ul>
+
+        In mongoDB Atlas you need to whitelist that is allow access from anywhere go to Network access then add a new IP addres then click allow from anywhere it ain't safe but it will do.
+    </div>
+
+    <div>
+        <h2>array.every()</h2>
+        <code>array.every(callback)</code> 
+        It returns true only if all elements pass the test.
+        If any element fails, it returns false immediately.
+
+        <pre>
+            const numbers = [2, 4, 6];
+            const allEven = numbers.every(num => num % 2 === 0);
+            console.log(allEven); // true
+        </pre>
+        <code>array.every(Boolean)</code> is a concise way to check <strong>"none of these values are empty, null, or false"</strong>.
+
+        <h2>array.some()</h2>
+        Tests if at least one element passes. Also returns a boolean. <code>[1, 2, 3].some(x => x > 2); // true
+        </code>
+    </div>
+    <div>
+        <h1>JWT :: Token based authentication</h1>
+        <ol>
+            <li>The client sends it's login details to the server</li>
+            <li>The server generates a <strong>JSON web token</strong> and it's sent to the broswer where it is stored in <code>localStorage</code></li>
+            <li>On future request the <code>jwt token</code> will be added the in Authorization header prefixed by <em>Bearer</em> <code>Authorization Bearer &lt;token></code></li>
+            <li>Then the server only needs to validate the signature</li>
+            <li>Then we can decode it in the frontend for our endpoints</li>
+        </ol>
+
+        then on the frontend i gotta decode the <code>JWT_TOKEN</code>
+        we will be using the CDN version this loads the library right in our browser.
+        <code>jwt_decode(token)</code> splits the JWT token to extract only the payload this is what contains our user data. so i extract the userId out of that.
+
+        <br><br>
+        In your current code, when the page first loads, you fetch the subscriptions from the database and store them in the subscriptions variable. This is like taking a "snapshot" of your database at that moment.
+        When you delete a subscription:
+        The API call successfully deletes it from the database ✅
+        But your frontend still has the old "snapshot" in the subscriptions variable ❌
+        This is why you need to refetch the subscriptions after deletion or any change to the data.
+
+        <br><br>
+        <strong>Short circuit evaluation</strong>
+        <code>const userId = token && jwt_decode(token)?.userId;</code>
+        This line checks if token exists and if it does, it decodes it and extracts the userId.
+        If token is not present, it short-circuits and returns undefined immediately, avoiding the need to decode a non-existent token.
+    </div>
+
+    <div>
+        <h2>Loop through an object</h2>
+        <pre>
+            const obj = { a: 1, b: 2 };
+
+            for (const key in obj) {
+            console.log(key, obj[key]);
+            }
+        </pre>
+
+        <pre>
+            for (const [key, value] of Object.entries(obj)) {
+                console.log(key, value);
+            }              
+        </pre>
+    </div>
+
+    <div>
+        <h2>ChartJS</h2>
+        Im using the CDN version. First where you want your chart you use a <div class="note-code">canvas</div> tag
+    </div>
+</body>
+</html>

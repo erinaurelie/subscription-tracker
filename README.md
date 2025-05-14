@@ -1,0 +1,1 @@
+On the Frontend we use HTML, CSS, JS and chartJS for data visualization.

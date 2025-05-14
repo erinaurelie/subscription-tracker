@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubWise</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/add-subscription.css">
+
+    <!-- JWT DECODER -->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3/build/jwt-decode.min.js"></script>
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="left-side">
+            <h1>SubWise</h1>
+            <sub>Subscription Tracker</sub>
+        </div>
+        <div class="right-side">
+            <div><img src="images/light-mode.svg" alt="light mode" class="js-theme"></div>
+            <a href="./sign-out.html" class="btn logout">
+                <img src="images/logout.svg" alt="logout">
+                Logout
+            </a>
+            
+            <button class="btn add-subscription-btn js-add-subscription-btn">
+                <img src="images/add.svg" alt="add subscription"> Add Subscription
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <div class="overview">
+                <h3>Subscription Overview</h3>
+                <div>
+                    <p class="category">Monthly Spending</p>
+                    <p class="price js-monthly-spending">$0.00</p>
+                </div>
+                <div>
+                    <p class="category">Yearly Spending</p>
+                    <p class="price js-yearly-spending">$0.00</p>
+                </div>
+
+                <div>
+                    <p class="category">Category Breakdown</p>
+                    <div class="js-category-breakdown">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="data-visualization">
+                <!-- The <canvas> tag in HTML is a container for drawing graphics — like charts, animations, games, and custom visualizations — using JavaScript. -->
+                <canvas id="subscriptionChart" width="300px"></canvas>
+            </div>
+        </section>
+
+        <h2 class="sub-title">Your Subscriptions</h2>
+
+        <section class="js-subscriptions subscriptions"></section>
+        <div id="toast-container"></div>
+
+        <section class="add-subscription js-add-subscription">
+            <div>
+                <h2>Add Subscription</h2>
+                <div>
+                    <label for="name">Subscription Name</label>
+                    <input id="name" type="text" placeholder="Netflix, Spotify, etc">
+                </div>
+                <div>
+                    <label for="price">Price</label>
+                    <input id="price" type="number" step="0.01" placeholder="9.99">
+                </div>
+                <div>
+                    <label for="billing">Billing Cycle</label>
+                    <select name="billing" id="billing">
+                        <option value="" disabled selected>Select Billing Cycle</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="weekly">Weekly</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="category">Category</label>
+                    <select name="category" id="category">
+                        <option value="" disabled selected>Select Category</option> <!-- can't be selected as a value  -->
+                        <option value="technology">Technology</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="news">News</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="finance">Finance</option>
+                        <option value="productivity">Productivity</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="start-date">Start Billing Date</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div>
+                    <label for="paymentMethod">Payment Method</label>
+                    <input type="text" id="paymentMethod" placeholder="USD, EUR etc">
+                </div>
+                <div class="controls">
+                    <button class="cancel-add-subscription js-cancel-add-subscription">Cancel</button>
+                    <button class="save-subscription js-save-subscription">Save</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script type="module" src="scripts/dashboard.js"></script>
+</body>
+</html>
+
+<!-- 
+    Maybe do like a user thing where they can switch accounts or just view which user is currently signed in
+    Build the pie chart with python matplotlib (maybe u rock girly pop)
+
+-->
