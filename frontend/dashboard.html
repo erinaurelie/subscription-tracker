@@ -15,20 +15,29 @@
 </head>
 <body>
     <header>
-        <div class="left-side">
-            <h1>SubWise</h1>
-            <sub>Subscription Tracker</sub>
+        <div class="header">
+            <div class="left-side">
+                <h1>SubWise</h1>
+                <sub>Subscription Tracker</sub>
+            </div>
+            <div class="right-side">
+                <div><img src="images/light-mode.svg" alt="light mode" class="js-theme"></div>
+                <a href="./sign-out.html" class="btn logout">
+                    <img src="images/logout.svg" alt="logout">
+                    Logout
+                </a>
+                
+                <button class="btn add-subscription-btn js-add-subscription-btn">
+                    <img src="images/add.svg" alt="add subscription"> Add Subscription
+                </button>
+                <img src="images/user-account.svg" alt="Profile" class="user-account js-user-account">
+            </div>
         </div>
-        <div class="right-side">
-            <div><img src="images/light-mode.svg" alt="light mode" class="js-theme"></div>
-            <a href="./sign-out.html" class="btn logout">
-                <img src="images/logout.svg" alt="logout">
-                Logout
-            </a>
-            
-            <button class="btn add-subscription-btn js-add-subscription-btn">
-                <img src="images/add.svg" alt="add subscription"> Add Subscription
-            </button>
+        <div class="user-settings js-user-settings">
+            <div>Switch Account</div>
+            <div>Create a new account</div>
+            <div>Edit Account Info</div>
+            <div>Delete Account</div>
         </div>
     </header>
 
@@ -47,9 +56,7 @@
 
                 <div>
                     <p class="category">Category Breakdown</p>
-                    <div class="js-category-breakdown">
-                        
-                    </div>
+                    <div class="js-category-breakdown"></div>
                 </div>
             </div>
             <div class="data-visualization">
@@ -102,7 +109,7 @@
                 </div>
                 <div>
                     <label for="paymentMethod">Payment Method</label>
-                    <input type="text" id="paymentMethod" placeholder="USD, EUR etc">
+                    <input type="text" id="paymentMethod" placeholder="Cash, Card etc">
                 </div>
                 <div class="controls">
                     <button class="cancel-add-subscription js-cancel-add-subscription">Cancel</button>
@@ -118,6 +125,5 @@
 
 <!-- 
     Maybe do like a user thing where they can switch accounts or just view which user is currently signed in
-    Build the pie chart with python matplotlib (maybe u rock girly pop)
 
 -->
