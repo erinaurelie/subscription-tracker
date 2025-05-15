@@ -30,3 +30,27 @@ img:not(.icons img) {
 .section:nth-of-type(1) {
     background-color: rgb(30, 41, 59);
 }
+
+
+.add-subscription div,
+select, 
+input[type="date"] {
+    background-color: rgb(23, 30, 49);
+    color: white;
+}
+
+input::placeholder {
+    color: rgba(99, 129, 156, 0.441);
+}
+
+.cancel-add-subscription {
+    color: white;
+}
+
+.cancel-add-subscription:hover {
+    background-color: hsl(var(--primary));
+}
+
+.user-settings div:hover {
+    background-color: hsla(0, 0%, 50%, .5);
+}

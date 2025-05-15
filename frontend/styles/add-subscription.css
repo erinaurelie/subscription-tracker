@@ -3,11 +3,9 @@ body {
 }
 
 .add-subscription {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     display: none;
+    min-height: 100vh;
+    transition: opacity 0.2 ease-in;
 }
 
 .add-subscription > div {
@@ -91,4 +89,9 @@ body {
     border: none;
     cursor: pointer;
     font-weight: bold;
+}
+
+select,
+input[type="date"] {
+    cursor: pointer;
 }

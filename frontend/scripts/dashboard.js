@@ -1,5 +1,7 @@
 import apiRequest from "./api.js";
-import { areFieldsFilled, clearFields, showToast } from './utils.js';
+import { areFieldsFilled, clearFields, showToast, borderColor } from './utils.js';
+import { renderAddSubscriptionDiv, updateSpendingOverview, updateCategoryBreakdown } from "./dom.js";
+
 
 const SUBSCRIPTION_ENDPOINT = `/api/v1/subscriptions`;
 const token = localStorage.getItem('authToken');
@@ -7,7 +9,7 @@ const subscriptionsContainer = document.querySelector('.js-subscriptions');
     
 
 // const userId = token && jwt_decode(token)?.userId; :: short circuit evaluation
-let userId;
+export let userId;
 
 if (token) {
     const decoded = jwt_decode(token); // decodes the payload of the JWT token
@@ -21,7 +23,7 @@ if (token) {
     }
 }
 
-async function getUserSubscriptions(userId) {
+export async function getUserSubscriptions(userId) {
     return await apiRequest(`${SUBSCRIPTION_ENDPOINT}/user/${userId}`);
 }
 
@@ -65,8 +67,6 @@ async function renderSubscriptions(subscriptions) {
 
     subscriptionsContainer.innerHTML = subscriptionHTML;
 }
-
-
 
 // event delegation
 subscriptionsContainer.addEventListener('click', async event => {
@@ -168,30 +168,11 @@ document.querySelector('.js-add-subscription-btn').addEventListener('click', () 
     renderAddSubscriptionDiv();
 });
 
-function renderAddSubscriptionDiv(display=true, header="Add Subscription") {
-    const addSubscriptionDiv = document.querySelector('.js-add-subscription');
-    addSubscriptionDiv.querySelector('h2').textContent = header;
-
-    if (display) {
-        addSubscriptionDiv.classList.add('position');
-    } else {
-        addSubscriptionDiv.classList.remove('position');
-    }
-    
-}
 
 async function addSubscription(...subscriptionData) {
     try {
         // this fields array needs to match the order in which the fields are passed in the addSubscription() function.
         const fields = ['name', 'price', 'frequency', 'category', 'startDate', 'paymentMethod'];
-
-        // // Get the selected color
-        // const selectedColor = borderColor();
-
-        // subscriptionData.push(selectedColor);
-
-        // fields.map((key, i) => [key, subscriptionData[i]]) creates an array of key-value pairs:
-        // and Object.fromEntries() turns that into an object because our backend expect an object
 
         const object = Object.fromEntries(fields.map((key, i) => [key, subscriptionData[i]]));
         
@@ -209,75 +190,6 @@ async function addSubscription(...subscriptionData) {
     }
 }
 
-function borderColor(subscription) {
-    const categoryColors = {
-        technology: 'rgb(126, 105, 171)',
-        fitness: 'rgb(246, 173, 85)',
-        news: 'rgb(220, 53, 69)',
-        entertainment: 'rgb(252, 129, 129)',
-        finance: 'rgb(104, 211, 145)',
-        productivity: 'rgb(99, 179, 237)',
-        other: 'rgb(246, 135, 179)'
-    };
-
-    for (const [key, value] of Object.entries(categoryColors)) {
-        if (subscription.category === key) return value;
-    }
-}
-
-async function updateSpendingOverview() {
-    const subscriptions = await getUserSubscriptions(userId);
-    console.log(subscriptions)
-    // pulls all the prices and bundles them into an array :: when you use {} you explicilty hv to return smth
-    const pricesOfSubscriptions = subscriptions.map(sub => 
-        sub.frequency === 'monthly' ? sub.price : // if its monthly return price
-        sub.frequency === 'yearly' ? sub.price / 12 : // if yearly return price / 12 to figure out how much it is per month
-        sub.frequency === 'weekly' ? sub.price * 4 : // if it is weekly return price * 4 weeks to figure out how much we pay per month
-        0 // else return 0
-    ); 
-
-    const monthlySpending = pricesOfSubscriptions.reduce((acc, elem) => acc + elem);
-    document.querySelector('.js-monthly-spending').textContent = `$${monthlySpending.toFixed(2)}`;
-
-    // yearly
-    const yearlySpending = monthlySpending * 12;
-    document.querySelector('.js-yearly-spending').textContent = `$${yearlySpending.toFixed(2)}`;
-    updateCategoryBreakdown(subscriptions);
-}
-
-async function updateCategoryBreakdown(subscriptions) {
-    // category breakdown 
-    const categories = subscriptions.reduce((acc, sub) => {
-        // if category doesn't exist yet create it
-        if (!acc[sub.category]) {
-            acc[sub.category] = { total: 0 }
-        }
-
-        acc[sub.category].total += sub.price;
-        return acc;
-    }, {}); // init accumulator as an empty object
-    // display
-    let categoriesHTML = '';
-    for (const [key, value] of Object.entries(categories)) {
-        // borderColor function takes a subscription which is an object and accesses its category property so to use it here we pass in an object with a category property that is the key so based on the category we pass in the predefined color.
-
-        categoriesHTML += `
-            <div class="breakdown">
-                <div>
-                    <span style="background-color:${borderColor({ category: key })}"></span>
-                    <span>${key}</span>
-                </div>
-                <span>${value.total}</span>
-            </div>
-        `;
-    }
-
-    document.querySelector('.js-category-breakdown')
-        .innerHTML = categoriesHTML;
-    
-    chartJS(categories);
-}
-
 const modeBtn = document.querySelector('.js-theme');
 
 modeBtn.addEventListener('click', () => {
@@ -287,7 +199,6 @@ modeBtn.addEventListener('click', () => {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = 'styles/dark-mode.css';
-        link.id = 'dynamic-dark-theme'; // optional but useful
         document.head.appendChild(link);
 
         modeBtn.setAttribute('src', 'images/dark-mode.svg');
@@ -302,36 +213,13 @@ modeBtn.addEventListener('click', () => {
     }
 }); 
 
-let myChart;
 
-function chartJS(categories) { 
-    // before rendering a new chart we need to destroy the existing one
-    if (myChart) myChart.destroy();
-
-    // get all the data from the catgories array
-    const labels = Object.keys(categories);
-    const values = Object.values(categories).map(value => value.total); // stores all the totals in each category
-    const backgroundColor = labels.map(label => borderColor({ category: label })); // each label is a category and borderColor() returns the predefined color for each category is takes an objet that contains the category you want the color for.
-
-    const ctx = document.getElementById('subscriptionChart').getContext('2d'); // this is the canvas tag
-    myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels,
-            datasets: [{
-                label: 'Subscription Categories',
-                data: values,
-                backgroundColor,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false  // Allows custom width & height
-        }
+document.querySelector('.js-user-account')
+    .addEventListener('click', () => {
+        console.log('Show settings');
+        document.querySelector('.js-user-settings').style.visibility = 'visible';
+        console.log(document.querySelector('.js-user-settings'))
     });
-}
-
 
 /*
     We return selected color from the borderColor() where it is extracted from the data-color attribute and we use it when rendering the HTML subscription.color that is because id add subscription i get the selected color and push it into the subscriptionData.
@@ -340,10 +228,5 @@ function chartJS(categories) {
     acc object start at {}
     sub is the current subscription object in the loop
     so first we check if the category exist if not we init to total: 0 then we add the current subscription's price to the total for that category. after all subscriptions are processed we return the accumulator object.
-
-
-    FOR THE COLOR IM NOT GONNA LET THE USER CHOOSE i'll have predfined colors for each category then when i display the breakdown i'll have those colors next to each category and those will be the border colors too.
-
-    might use python for the pie chart or find out any JS library for pie charts but i know python is normally for data stuff
 
 */

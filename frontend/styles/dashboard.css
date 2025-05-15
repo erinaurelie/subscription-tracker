@@ -1,9 +1,9 @@
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid hsl(var(--secondary));
-    padding: 1rem ;
+    padding: 1rem;
 }
 
 
@@ -232,4 +232,26 @@ section:nth-of-type(1) {
 
 .breakdown > span::before { /*no reason for doing this just wanted to try*/
     content: '$';
+}
+
+/* user settings */
+.user-settings {
+    border: 1px solid;
+    position: absolute;
+    right: 10px;
+    border-radius: var(--border-radius);
+    visibility: hidden;
+    background-color: black;
+}
+
+.user-settings div {
+    margin-bottom: 5px;
+    padding: 0.4rem 0.75rem;
+    min-width: 16rem;
+    cursor: pointer;
+    color: whitesmoke;
+}
+
+.user-settings div:hover {
+    background-color: hsl(var(--muted));
 }
