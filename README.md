@@ -1,6 +1,3 @@
-On the Frontend we use HTML, CSS, JS and chartJS for data visualization.
-On the backend we use Node Js and Express, MongoDB as database we use Arcjet as middleware for bot protection and rate limiting, we use upstash to automate our reminder workflows and we use Json Web Token for Authentication.
-
 # Subscription Management Web App
 
 A Node.js-based subscription management application allows users to manage their subscriptions, track spending, and visualize data. This project is built with Express.js for the backend and includes features like user authentication, subscription tracking, and data visualization.
@@ -39,7 +36,8 @@ A Node.js-based subscription management application allows users to manage their
    cd subscription-tracker
 
 2. Install dependencies
-``` npm install
+   ```bash
+    npm install
 
 
 3. Create a new file named `.env.local` in the root of your project and add the following content:
