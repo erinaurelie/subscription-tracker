@@ -25,7 +25,7 @@ async function apiRequest(endpoint, method = 'GET', body = null) {
     return { error: data.error || 'API request failed' }
   } 
 
-  if (method === 'DELETE') return; // because my delete controller returns 204 :: No content
+  if (method === 'DELETE') return; // because my delete controller returns 204 :: No content.
 
   
   return data;
