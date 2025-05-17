@@ -23,19 +23,5 @@ app.use('/api/v1/workflows', workflowRouter);
 
 app.use(errorMiddleware); // Express only uses this middleware for unhandled errors if it’s declared last.
 
-app.get('/', (req, res) => {
-    res.status(200).send({
-        success: true,
-        message: 'Test succeeded!'
-    });
-});
-
-app.post('/hello', (req, res) => {
-    res.status(200).send({
-        success: true,
-        message: `Hello ${req.body.name}`
-    });
-});
-
 
 export default app;
