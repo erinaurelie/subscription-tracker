@@ -1,6 +1,7 @@
 import apiRequest from "./api.js";
-import { areFieldsFilled, clearFields, showToast, borderColor } from './utils.js';
-import { renderAddSubscriptionDiv, updateSpendingOverview, updateCategoryBreakdown } from "./dom.js";
+import { areFieldsFilled, clearFields, showToast, borderColor, navigateTo } from './utils.js';
+import { renderAddSubscriptionDiv, updateSpendingOverview } from "./dom.js";
+import { logout, signUp } from "./auth.js";
 
 
 const SUBSCRIPTION_ENDPOINT = `/api/v1/subscriptions`;
@@ -213,13 +214,87 @@ modeBtn.addEventListener('click', () => {
     }
 }); 
 
-
-document.querySelector('.js-user-account')
-    .addEventListener('click', () => {
-        console.log('Show settings');
+// if clicked outside the content disappears
+document.addEventListener('click', event => {
+    if (event.target.classList.contains('js-user-account')) {
         document.querySelector('.js-user-settings').style.visibility = 'visible';
-        console.log(document.querySelector('.js-user-settings'))
-    });
+    } else {
+        document.querySelector('.js-user-settings').style.visibility = 'hidden';
+    }
+});
+
+
+const userContainer = document.querySelector('.js-user-settings');
+const previousHTML = userContainer.innerHTML;
+
+userContainer.addEventListener('click', async event => {
+    const currentTask = event.target.textContent.toLowerCase();
+    const accountInfo = await apiRequest(`/api/v1/users/${userId}`);
+    if (currentTask === 'create a new account') {
+        if (!confirm('Creating a new account will log you out of the current session. Continue?')) {
+            return;
+        }
+        logout('sign-up'); // logout and redirect to the sign-up page
+    } else if (currentTask === 'edit account info') {
+        userContainer.innerHTML = `
+            <div class="edit-info">
+                <div class="js-previous previous"><img src="images/arrow-back.svg"> Edit account info</div>
+
+                <div>
+                    <label for="name">Username: </label>
+                    <input type="text" id="name"placeholder=${accountInfo.name}>
+                </div>
+                
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder=${accountInfo.email}>
+                </div>
+                <button class="js-save-edit-info">Save</button>
+            </div>
+        `;
+        
+        document.querySelector('.js-previous').addEventListener('click', () => {
+            userContainer.innerHTML = previousHTML;
+        });
+
+        const saveBtn = document.querySelector('.js-save-edit-info');
+
+        saveBtn.addEventListener('click', async () => {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            if (!areFieldsFilled(name, email)) {
+                showToast('Please fill all fields to update user', 'error');
+                return;
+            }
+
+            await apiRequest(`/api/v1/users/${userId}`, 'PUT', { name, email });
+            saveBtn.textContent = 'Saved';
+            showToast('Account info updated succesfully', 'success');
+        });
+    } else if (currentTask === 'see account details') { 
+        console.log(accountInfo)
+        userContainer.innerHTML = `
+            <div class="see-account">
+                <div class="js-previous previous"><img src="images/arrow-back.svg"> See account details</div>
+                <div><span>Username</span>: ${accountInfo.name}</div>
+                <div><span>Email</span>: ${accountInfo.email}</div>
+                <div><span>User since</span>: ${new Date(accountInfo.createdAt).toDateString()}</div>
+            </div>
+        `
+        document.querySelector('.js-previous').addEventListener('click', () => {
+            userContainer.innerHTML = previousHTML;
+        });
+    } else {
+        // delete account
+       if (!confirm('Are you sure you want to delete your account? This action is irreversible.')) {
+            return;
+       }
+       await apiRequest(`/api/v1/users/${userId}`, 'DELETE');
+       navigateTo('index');
+       showToast('Account Deleted', 'success');
+    }
+});
 
 /*
     We return selected color from the borderColor() where it is extracted from the data-color attribute and we use it when rendering the HTML subscription.color that is because id add subscription i get the selected color and push it into the subscriptionData.
@@ -228,5 +303,8 @@ document.querySelector('.js-user-account')
     acc object start at {}
     sub is the current subscription object in the loop
     so first we check if the category exist if not we init to total: 0 then we add the current subscription's price to the total for that category. after all subscriptions are processed we return the accumulator object.
+
+
+    a tool that erases all ur comments form ur github repo
 
 */

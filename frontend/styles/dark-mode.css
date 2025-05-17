@@ -50,7 +50,3 @@ input::placeholder {
 .cancel-add-subscription:hover {
     background-color: hsl(var(--primary));
 }
-
-.user-settings div:hover {
-    background-color: hsla(0, 0%, 50%, .5);
-}

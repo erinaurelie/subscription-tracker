@@ -1,6 +1,10 @@
 export function navigateTo(path) {
-  const baseURL = 'http://127.0.0.1:5501/frontend';
-  window.location.href = `${baseURL}/${path}.html`;
+    if (!path) {
+        console.error('did not provide path to navigate to');
+        return;
+    }
+    const baseURL = 'http://127.0.0.1:5501/frontend';
+    window.location.href = `${baseURL}/${path}.html`;
 }
 
 export function showToast(message, type = 'success') {
@@ -44,4 +48,16 @@ export function borderColor(subscription) {
     for (const [key, value] of Object.entries(categoryColors)) {
         if (subscription.category === key) return value;
     }
+}
+
+
+export function redirectIfLoggedIn() {
+    const authToken = localStorage.getItem('authToken');
+
+    if (authToken) {
+        navigateTo('dashboard');
+        return;
+    }
+    // Boolean(authToken)  
+    // !!authToken
 }

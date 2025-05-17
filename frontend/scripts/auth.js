@@ -19,6 +19,8 @@ export async function signIn(userData) {
         });
 
         const data = await response.json();
+        console.log(data);
+        
 
         if (response.ok) {
             return data;
@@ -56,11 +58,11 @@ export async function signUp(userData) {
     }
 }
 
-export function logout() {
+export function logout(page="index") {
     localStorage.removeItem('authToken');
     showToast('Logged out successfully', 'success');
     setTimeout(() => {
-        navigateTo('index');
+        navigateTo(page);
     }, 1500);
 }
 

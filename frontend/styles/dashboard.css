@@ -242,9 +242,13 @@ section:nth-of-type(1) {
     border-radius: var(--border-radius);
     visibility: hidden;
     background-color: black;
+    transition: visibility 0.5s ease-in-out;
 }
 
-.user-settings div {
+.user-account {
+    cursor: pointer;
+}
+.user-settings div:not(.see-account):not(.edit-info) {
     margin-bottom: 5px;
     padding: 0.4rem 0.75rem;
     min-width: 16rem;
@@ -252,6 +256,50 @@ section:nth-of-type(1) {
     color: whitesmoke;
 }
 
-.user-settings div:hover {
-    background-color: hsl(var(--muted));
+.user-settings div:hover:not(.see-account):not(.edit-info) {
+    background-color: hsla(0, 0%, 50%, .5);
+}
+
+.previous {
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 1.1rem; 
+}
+
+.see-account span,
+.see-account div:first-child {
+    font-weight: bold;
+}
+
+.edit-info {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    padding: 0.5rem 1rem;
+}
+
+.edit-info label {
+    display: block;
+}
+.edit-info input {
+    padding: .5rem 1rem;
+    min-width: 250px;
+    background-color: transparent;
+    color: white;
+}
+
+.edit-info div:nth-of-type(2):hover,
+.edit-info div:nth-of-type(3):hover {
+    background-color: black !important;
+}
+
+.edit-info button {
+    border: none;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    background-color: hsl(var(--primary));
+    color: whitesmoke;
+    font-weight: 700;
+    border-radius: var(--border-radius);
 }

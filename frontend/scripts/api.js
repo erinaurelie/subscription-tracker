@@ -13,14 +13,22 @@ async function apiRequest(endpoint, method = 'GET', body = null) {
     body: body ? JSON.stringify(body) : null
   });
 
-
-  if (!res.ok) {
-    throw new Error('API request failed');
+  // we attempt to parse the response but is it fails data is set to an empty object to avoi breaking the code.
+  let data;
+  try {
+    data = await res.json();
+  } catch (error) { 
+    data = {};
   }
 
-  if (method === 'DELETE') return; // beccause my delete controller returns 204 :: No content
+  if (!res.ok) {
+    return { error: data.error || 'API request failed' }
+  } 
 
-  return (await res.json()).data;
+  if (method === 'DELETE') return; // because my delete controller returns 204 :: No content
+
+  
+  return data;
 }
 
 

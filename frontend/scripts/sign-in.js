@@ -1,5 +1,8 @@
-import { signIn } from "./auth.js";
-import { showToast, navigateTo, clearFields, areFieldsFilled, disableBtn } from "./utils.js";
+import apiRequest from "./api.js";
+import { showToast, navigateTo, clearFields, areFieldsFilled, disableBtn, redirectIfLoggedIn } from "./utils.js";
+
+
+redirectIfLoggedIn();
 
 const signInBtn = document.querySelector('.js-login-btn');
 
@@ -23,7 +26,18 @@ signInBtn.addEventListener('click', async event => {
     // disable button
     disableBtn(signInBtn);
 
-    const result = await signIn({ email, password });
+    // const result = await signIn({ email, password });
+    const result = await apiRequest(`/api/v1/auth/sign-in`, 'POST', { email, password });
+
+    console.log(result)
+
+    if (result.error) {
+        showToast(result.error, 'error');
+        signInBtn.classList.remove('non-active');
+        signInBtn.querySelector('div').style.visibility = 'hidden';
+        clearFields(email, password);
+        return;
+    }
     
     const { token } = result.data;
 
