@@ -113,3 +113,6 @@ export const signIn = async (req, res, next) => {
     The JWT tokens are not stored on the server so we can't delete them directly. Insteas we rely on the client to remove it from local storage or cookies. So this does not do much server side
     So after signing out redirect the client to the login page 
 */
+
+
+// THIS COMMENT WAS ADDED IN THE CLEAN VERSION
