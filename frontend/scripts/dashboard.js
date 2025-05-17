@@ -9,11 +9,10 @@ const token = localStorage.getItem('authToken');
 const subscriptionsContainer = document.querySelector('.js-subscriptions');
     
 
-// const userId = token && jwt_decode(token)?.userId; :: short circuit evaluation
 export let userId;
 
 if (token) {
-    const decoded = jwt_decode(token); // decodes the payload of the JWT token
+    const decoded = jwt_decode(token);
     userId = decoded.userId;
 
     try {
@@ -69,14 +68,13 @@ async function renderSubscriptions(subscriptions) {
     subscriptionsContainer.innerHTML = subscriptionHTML;
 }
 
-// event delegation
+
 subscriptionsContainer.addEventListener('click', async event => {
     if (event.target.classList.contains('js-delete-subscription')) {
         const { subscriptionId } = event.target.dataset;
 
         try {
             await apiRequest(`${SUBSCRIPTION_ENDPOINT}/${subscriptionId}`, 'DELETE');
-            // Re-fetch subscriptions from the database
             const subscriptions = await getUserSubscriptions(userId);
             showToast('Subscription deleted', 'success');
             console.log('After deletion', subscriptions.length);
@@ -88,17 +86,15 @@ subscriptionsContainer.addEventListener('click', async event => {
         const { subscriptionId } = event.target.dataset;
 
         try {
-            // Fetch current subscription data
             const currentSubscription = await apiRequest(`${SUBSCRIPTION_ENDPOINT}/${subscriptionId}`);
             
             renderAddSubscriptionDiv(true, 'Edit Subscription');
 
-            // Pre-fill the form with current values
             document.getElementById('name').value = currentSubscription.name;
             document.getElementById('price').value = currentSubscription.price;
             document.getElementById('billing').value = currentSubscription.frequency;
             document.getElementById('category').value = currentSubscription.category;
-            document.getElementById('start-date').value = currentSubscription.startDate; // .split('T')[0]
+            document.getElementById('start-date').value = currentSubscription.startDate;
             document.getElementById('paymentMethod').value = currentSubscription.paymentMethod;
 
             const saveBtn = document.querySelector('.js-save-subscription');
@@ -106,7 +102,6 @@ subscriptionsContainer.addEventListener('click', async event => {
             saveBtn.classList.remove('js-save-subscription');
             
             saveBtn.addEventListener('click', async () => {
-                // get user inputs and based on the current subscription, if the user didn't change the value, use the current value.
                 const name = document.getElementById('name').value || currentSubscription.name; 
                 const price = document.getElementById('price').value || currentSubscription.price;
                 const frequency = document.getElementById('billing').value || currentSubscription.frequency;
@@ -132,8 +127,6 @@ subscriptionsContainer.addEventListener('click', async event => {
                     showToast('Failed to update subscription', 'error');
                 }
             });
-           
-            // console.log('Object to be sent to the backend', object);
 
         } catch (error) {
             console.error(error);
@@ -172,7 +165,6 @@ document.querySelector('.js-add-subscription-btn').addEventListener('click', () 
 
 async function addSubscription(...subscriptionData) {
     try {
-        // this fields array needs to match the order in which the fields are passed in the addSubscription() function.
         const fields = ['name', 'price', 'frequency', 'category', 'startDate', 'paymentMethod'];
 
         const object = Object.fromEntries(fields.map((key, i) => [key, subscriptionData[i]]));
@@ -214,7 +206,7 @@ modeBtn.addEventListener('click', () => {
     }
 }); 
 
-// if clicked outside the content disappears
+
 document.addEventListener('click', event => {
     if (event.target.classList.contains('js-user-account')) {
         document.querySelector('.js-user-settings').style.visibility = 'visible';
@@ -234,7 +226,7 @@ userContainer.addEventListener('click', async event => {
         if (!confirm('Creating a new account will log you out of the current session. Continue?')) {
             return;
         }
-        logout('sign-up'); // logout and redirect to the sign-up page
+        logout('sign-up');
     } else if (currentTask === 'edit account info') {
         userContainer.innerHTML = `
             <div class="edit-info">
@@ -286,7 +278,6 @@ userContainer.addEventListener('click', async event => {
             userContainer.innerHTML = previousHTML;
         });
     } else {
-        // delete account
        if (!confirm('Are you sure you want to delete your account? This action is irreversible.')) {
             return;
        }
@@ -295,16 +286,3 @@ userContainer.addEventListener('click', async event => {
        showToast('Account Deleted', 'success');
     }
 });
-
-/*
-    We return selected color from the borderColor() where it is extracted from the data-color attribute and we use it when rendering the HTML subscription.color that is because id add subscription i get the selected color and push it into the subscriptionData.
-
-    To group subscriptions by category and sum their total prices. we are using the reduce method of arrays. 
-    acc object start at {}
-    sub is the current subscription object in the loop
-    so first we check if the category exist if not we init to total: 0 then we add the current subscription's price to the total for that category. after all subscriptions are processed we return the accumulator object.
-
-
-    a tool that erases all ur comments form ur github repo
-
-*/

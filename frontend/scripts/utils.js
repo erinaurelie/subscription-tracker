@@ -17,15 +17,15 @@ export function showToast(message, type = 'success') {
   
     setTimeout(() => {
         toast.remove();
-    }, 3000); // Remove after 3 seconds
+    }, 3000);
 }
 
 export function clearFields(...fields) {
     fields.forEach(field => field = '');
 }
 
-export function areFieldsFilled(...fields) { // rest parameter that bundles all args into an array
-    return fields.every(Boolean); // every checks that every field is truthy i.e. not empty :: if one is empyt it will return false
+export function areFieldsFilled(...fields) {
+    return fields.every(Boolean);
 }
 
 export function disableBtn(button) {
@@ -58,6 +58,4 @@ export function redirectIfLoggedIn() {
         navigateTo('dashboard');
         return;
     }
-    // Boolean(authToken)  
-    // !!authToken
 }

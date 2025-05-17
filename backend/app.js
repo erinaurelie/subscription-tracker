@@ -21,7 +21,7 @@ app.use('/api/v1/subscriptions', subscriptionRouter);
 app.use('/api/v1/workflows', workflowRouter);
 
 
-app.use(errorMiddleware); // Express only uses this middleware for unhandled errors if it’s declared last.
+app.use(errorMiddleware);
 
 
 export default app;

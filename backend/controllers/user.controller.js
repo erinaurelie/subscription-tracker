@@ -3,27 +3,24 @@ import AppError from "../utils/app-error.js";
 
 export const getUsers = async (req, res, next) => {
     try {
-        const users = await User.find(); // find all
+        const users = await User.find();
         res.status(200).json({ 
             success: true,
             data: users
         });
     } catch (error) {
-        next(error); // forwarding it to our error handler
+        next(error);
     }
 }
 
 export const getUser = async (req, res, next) => {
     try {
-        const { id } = req.params; // this is gotten from the URL params
+        const { id } = req.params; 
         const user = await User.findById(id).select('-password');
-        /*
-            Each user has a name, emaill and password. So we wanna get a specific user details specifically their name and email ONLY. So the select() omits the passsword field cause we dont need it.
-        */
 
         if (!user) {
             const error = new AppError('User not found', 404);
-            throw error; // so we can catch it the the error middle ware
+            throw error;
         }
 
         res.status(200).json({

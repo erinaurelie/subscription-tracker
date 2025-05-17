@@ -19,7 +19,7 @@ export const sendReminderEmail = async ({ to, type, subscription }) => {
         paymentMethod: subscription.paymentMethod,
     }
 
-    // the actual msg
+   
     const message = template.generateBody(mailInfo);
     const subject = template.generateSubject(mailInfo);
 

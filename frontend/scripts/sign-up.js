@@ -20,7 +20,6 @@ signUpBtn.addEventListener('click', async event => {
 
     disableBtn(signUpBtn);
 
-    // const result = await signUp({ name, email, password });
 
     const result = await apiRequest('/api/v1/auth/sign-up', 'POST', { name, email, password });
 
@@ -37,15 +36,12 @@ signUpBtn.addEventListener('click', async event => {
     if (token) {
         localStorage.setItem('authToken', token);
 
-        // show success toast
         showToast(result.message || 'Signed up successfully', 'success');
 
-        // Redirect to dashboard after short delay
         setTimeout(() => {
             navigateTo('dashboard');
         }, 1500);
-    } else {
-        // show error toast 
+    } else { 
         showToast(result.error || 'Sign up failed', 'error');
         signInBtn.classList.remove('non-active');
         signInBtn.querySelector('div').style.visibility = 'hidden';
