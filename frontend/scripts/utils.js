@@ -1,7 +1,7 @@
 export function navigateTo(path) {
     if (!path) {
-        console.error('did not provide path to navigate to');
-        return;
+        const baseURL = 'http://127.0.0.1:5501/frontend';
+        window.location.href = `${baseURL}/${404}.html`;
     }
     const baseURL = 'http://127.0.0.1:5501/frontend';
     window.location.href = `${baseURL}/${path}.html`;
