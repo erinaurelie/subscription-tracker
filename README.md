@@ -11,7 +11,7 @@ A Node.js-based subscription management application allows users to manage their
 - **Automated Reminder Workflows**: When your subscription is almost due e.g. 7days, 3days you would get a an email to remind you to either update ur subscription or cancel it.
 
 
-# Teach Stack
+# Tech Stack
 
 ### Backend
 - **Node.js**: JavaScript runtime for building the server.
